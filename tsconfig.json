@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "jsx": "react",
+      
+        "target": "es2015",
+        "module": "commonjs",
+        "lib": ["dom", "es2017"],
+        "noUnusedLocals": true,
+        "moduleResolution": "node"
+    }
+  }
