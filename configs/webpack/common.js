@@ -1,6 +1,7 @@
 // shared config (dev and prod)
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   resolve: {
@@ -20,7 +21,18 @@ module.exports = {
       },
       {
         test: /\.(scss|sass)$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
+        use: [
+          MiniCssExtractPlugin.loader, 
+          { loader: "css-loader", options: { modules: { auto: true, localIdentName: "[name]--[hash:base64:5]" } } },
+          {
+            loader: "sass-loader",
+            options: {
+              sassOptions: {
+                includePaths: ["src/assets/scss"],
+              }
+            },
+          }
+        ],
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
@@ -31,7 +43,7 @@ module.exports = {
       },
     ],
   },
-  plugins: [new HtmlWebpackPlugin({ template: "index.html.ejs" })],
+  plugins: [new MiniCssExtractPlugin({ filename: '[name]_[hash].css' }), new HtmlWebpackPlugin({ template: "index.html.ejs" })],
   externals: {
     react: "React",
     "react-dom": "ReactDOM",
